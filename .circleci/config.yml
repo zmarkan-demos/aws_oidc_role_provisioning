@@ -23,4 +23,6 @@ jobs:
 workflows:
   provision:
     jobs:
-      - provision_infra
+      - provision_infra:
+          context:
+            - tf_cloud
