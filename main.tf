@@ -7,7 +7,15 @@ terraform {
     }
 
     required_version = ">= 1.3.7"
+
+    backend "remote" {
+      organization = "circleci_oicd_demo_org"
+      workspaces {
+      name = "infra_provisioning"
+    }
+  }
 }
+
 
 provider "aws" {
     region = var.aws_region
@@ -17,7 +25,6 @@ provider "aws" {
         Owner = "zmarkan"
       }
     }
-
 }
 
 module "aws_oicd_demo_ecr_project" {
@@ -52,40 +59,6 @@ resource "aws_iam_openid_connect_provider" "circleci_oidc_provider" {
   ]
 }
 
-# resource "aws_iam_role_policy" "my_role_policy" {
-#     provider = circleci_oidc_provider.arn
-#     name = "test_policy"
-#     role = aws_iam_role.test_role.id
-
-#     policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Action = [
-#           "ec2:Describe*",
-#         ]
-#         Effect   = "Allow"
-#         Resource = "*"
-#       },
-#     ]
-#   })
-# }
-
-# resource "aws_iam_role" "test_role" {
-#   name = "test_role"
-
-#   assume_role_policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Action = "sts:AssumeRole"
-#         Effect = "Allow"
-#         Sid    = ""
-#         Principal = {
-#           Service = "ec2.amazonaws.com"
-#         }
-#       },
-#     ]
-#   })
-# }
-  
+output "circleci_oidc_provider_arn" {
+  value = aws_iam_openid_connect_provider.circleci_oidc_provider.arn
+}
