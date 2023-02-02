@@ -2,14 +2,31 @@ version: 2.1
 
 orbs:
   terraform: circleci/terraform@3.2.0
+  aws-cli: circleci/aws-cli@3.1.4
 
 jobs:
   provision_infra:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/aws:2022.06
     steps:
 
       - checkout
+      - aws-cli/setup:
+          role-arn: 'arn:aws:iam::715930815444:role/oicd-ecr-upload-role'
+          # optional parameters
+          profile-name: "CIRCLECI-OIDC-PROVISIONING-PROFILE"
+          role-session-name: circleci-aws-ecr-publish-job
+          session-duration: "1800"
+      # - run:
+      #    name: Log-into-AWS-ECR
+      #    command: |
+      #      # must use same profile specified in the step above       
+      #      aws_ecr_pwd=$(aws ecr get-login-password --profile "OIDC-PROFILE")
+      #      echo $aws_ecr_pwd
+      #      echo "export DOCKER_PASSWORD=$aws_ecr_pwd" >> "$BASH_ENV"
+      #      source $BASH_ENV
+      #      echo "export AWS_DOCKER_LOGIN=AWS" >> "$BASH_ENV"
+      #      source $BASH_ENV
       - run:
           name: Create local .terraformrc file
           command: |
