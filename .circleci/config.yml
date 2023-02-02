@@ -12,7 +12,7 @@ jobs:
 
       - checkout
       - aws-cli/setup:
-          role-arn: 'arn:aws:iam::715930815444:role/oicd-ecr-upload-role'
+          role-arn: 'arn:aws:iam::715930815444:role/circleci-oidc-role-provisioning-role'
           # optional parameters
           profile-name: "CIRCLECI-OIDC-PROVISIONING-PROFILE"
           role-session-name: circleci-aws-ecr-publish-job
