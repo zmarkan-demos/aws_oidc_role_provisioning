@@ -47,3 +47,4 @@ workflows:
       - provision_infra:
           context:
             - tf_cloud
+            - circleci_oidc_org
