@@ -1,12 +1,27 @@
+terraform {
+  
+  required_providers {
+    circleci = {
+        source = "mrolla/circleci"
+        version = "~> 0.6"
+      }
+  }
+}
+
+# provider "circleci" {
+#   api_token = var.circleci_api_token
+#   organization = var.circleci_oidc_org_id
+#   vcs_type = "github"
+# }
+
 locals {
   circleci_project_id = "b181484f-e483-4028-97ba-6efaa8445c97"
 }
 
 variable "circleci_oidc_provider_base_url" {}
 variable "circleci_oidc_org_id" {}
-variable "circleci_oidc_provider_arn" {
-  
-}
+variable "circleci_oidc_provider_arn" {}
+# variable "circleci_api_token" {}
 
 resource "aws_iam_role_policy" "aws_oicd_demo_ecr_role_policy" {
   name = "oicd_demo_ecr_role_policy"
@@ -60,3 +75,14 @@ resource "aws_iam_role" "aws_oicd_ecr_role" {
     ]
   })
 }
+
+resource "circleci_context" "arn_context" {
+  name = "aws_oicd_demo_ecr"
+}
+
+resource "circleci_context_environment_variable" "role_arn_var" {
+  variable = "AWS_OICD_ARN_VAR"
+  value = aws_iam_role.aws_oicd_ecr_role.arn
+  context_id = circleci_context.arn_context.id
+}
+

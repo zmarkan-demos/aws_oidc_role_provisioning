@@ -48,3 +48,4 @@ workflows:
           context:
             - tf_cloud
             - circleci_oidc_org
+            - circleci_api
