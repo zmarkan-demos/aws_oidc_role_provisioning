@@ -25,7 +25,7 @@ provider "aws" {
         Owner = "zmarkan"
       }
     }
-    profile = "CIRCLECI-OIDC-PROVISIONING-PROFILE"
+    # profile = "CIRCLECI-OIDC-PROVISIONING-PROFILE"
 }
 
 module "aws_oicd_demo_ecr_project" {
