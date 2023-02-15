@@ -51,12 +51,17 @@ workflows:
             - circleci_api
       - wait_for_aproval:
           type: approval
+          requires:
+            - plan_infra
           filters:
             branches:
               only: 
                 - main
+          
       - provision_infra:
           context:
             - tf_cloud
             - circleci_oidc_org
             - circleci_api
+          requires:
+            - wait_for_aproval
