@@ -7,6 +7,9 @@ terraform {
   }
 }
 
+# TODO: Replace PROJECT_NAME values with your real project name 
+# TODO: Replace YOUR_CIRCLECI_PROJECT_ID with real project ID
+
 locals {
     project_name = basename(abspath(path.module))
 }
@@ -20,31 +23,8 @@ resource "aws_iam_role_policy" "project_role_policy" {
   name = "${locals.project_name}-role_policy"
   role = aws_iam_role.project_role.id
 
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid = "VisualEditor0",
-        Effect = "Allow",
-        Action = [
-          "ecr:UntagResource",
-          "ecr:CompleteLayerUpload",
-          "ecr:TagResource",
-          "ecr:UploadLayerPart",
-          "ecr:InitiateLayerUpload",
-          "ecr:BatchCheckLayerAvailability",
-          "ecr:PutImage"
-        ],
-        Resource = "arn:aws:ecr:us-east-1:715930815444:repository/cci-demo-cr"
-      },
-      {
-        Sid = "VisualEditor1",
-        Effect = "Allow",
-        Action = "ecr:GetAuthorizationToken",
-        Resource = "*"
-      }
-    ]
-  })
+  # TODO = replace with your policy JSON
+  policy = jsonencode("YOUR_POLICY_JSON")
 }
 
 resource "aws_iam_role" "project_role" {
@@ -75,6 +55,6 @@ resource "circleci_context" "arn_context" {
 
 resource "circleci_context_environment_variable" "role_arn_var" {
   variable = "AWS_OICD_ARN_VAR"
-  value = aws_iam_role.aws_oicd_ecr_role.arn
+  value = aws_iam_role.project_role.arn
   context_id = circleci_context.arn_context.id
 }
