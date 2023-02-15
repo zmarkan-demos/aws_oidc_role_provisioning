@@ -17,7 +17,7 @@ variable "circleci_oidc_provider_arn" {}
 variable "circleci_project_id" {}
 
 resource "aws_iam_role_policy" "project_role_policy" {
-  name = "${locals.project_name}-role_policy"
+  name = "${local.project_name}-role_policy"
   role = aws_iam_role.project_role.id
 
   policy = jsonencode({
@@ -48,7 +48,7 @@ resource "aws_iam_role_policy" "project_role_policy" {
 }
 
 resource "aws_iam_role" "project_role" {
-  name = "${locals.project_name}-role"
+  name = "${local.project_name}-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -70,7 +70,7 @@ resource "aws_iam_role" "project_role" {
 }
 
 resource "circleci_context" "arn_context" {
-  name = "${locals.project_name}-aws-role-arn"
+  name = "${local.project_name}-aws-role-arn"
 }
 
 resource "circleci_context_environment_variable" "role_arn_var" {
