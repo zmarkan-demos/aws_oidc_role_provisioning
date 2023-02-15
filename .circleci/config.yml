@@ -27,7 +27,8 @@ jobs:
           session-duration: "1800"
       - setup_terraform
       - terraform/plan:
-          var: "circleci_oidc_org_id=$CIRCLECI_ORG_ID"
+          var: "circleci_oidc_org_id=$CIRCLECI_ORG_ID,circleci_api_token=$CIRCLECI_API_TOKEN"
+          
   provision_infra:
     docker:
       - image: cimg/aws:2022.06
@@ -39,7 +40,7 @@ jobs:
           session-duration: "1800"
       - setup_terraform
       - terraform/apply:
-          var: "circleci_oidc_org_id=$CIRCLECI_ORG_ID"
+          var: "circleci_oidc_org_id=$CIRCLECI_ORG_ID,circleci_api_token=$CIRCLECI_API_TOKEN"
 
 workflows:
   provision:
