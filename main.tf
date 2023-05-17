@@ -42,6 +42,7 @@ resource "aws_iam_openid_connect_provider" "circleci_oidc_provider" {
     var.circleci_oidc_org_id
   ]
   thumbprint_list = [ 
-    "9e99a48a9960b14926bb7f3b02e22da2b0ab7280" 
+    "c510b3d1652c4d8b71b64911fb377d4d788c3a5a",
+    "9e99a48a9960b14926bb7f3b02e22da2b0ab7280"
   ]
 }
