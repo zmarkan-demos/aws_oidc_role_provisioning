@@ -74,7 +74,7 @@ resource "circleci_context" "arn_context" {
 }
 
 resource "circleci_context_environment_variable" "role_arn_var" {
-  variable = "AWS_OICD_ARN_VAR"
+  variable = "AWS_OIDC_ARN_VAR"
   value = aws_iam_role.project_role.arn
   context_id = circleci_context.arn_context.id
 }
