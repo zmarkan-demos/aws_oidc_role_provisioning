@@ -1,5 +1,5 @@
-module "aws_oicd_demo_ecr_project" {
-  source = "./projects/aws_oicd_demo_ecr"
+module "aws_oidc_demo_ecr_project" {
+  source = "./projects/aws_oidc_demo_ecr"
   circleci_project_id = "fbac1980-6440-416f-a89c-2e2ac2b450c3"
   circleci_oidc_provider_base_url = var.circleci_oidc_provider_base_url
   circleci_oidc_org_id = var.circleci_oidc_org_id
